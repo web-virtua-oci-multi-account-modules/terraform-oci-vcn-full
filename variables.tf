@@ -13,6 +13,12 @@ variable "cidr_block" {
   type        = string
 }
 
+variable "compartment_name" {
+  description = "Compartment name"
+  type        = string
+  default     = null
+}
+
 variable "cidr_blocks" {
   description = "Cidr block list to VCN, is optional"
   type        = list(string)
@@ -22,7 +28,7 @@ variable "cidr_blocks" {
 variable "dns_label" {
   description = "DNS label"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "ipv6private_cidr_blocks" {

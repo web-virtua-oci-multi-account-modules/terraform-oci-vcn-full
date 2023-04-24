@@ -1,7 +1,3 @@
-data "oci_identity_compartments" "compartment" {
-  compartment_id = var.compartment_id
-}
-
 data "oci_core_services" "all_services" {
   filter {
     name   = "name"
@@ -14,7 +10,7 @@ locals {
   tags_network = {
     "tf-name"        = var.display_name
     "tf-type"        = "vcn"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 
   internet_gateway_name = var.internet_gateway_name != null ? var.internet_gateway_name : "${var.display_name}-igtw"
@@ -23,7 +19,7 @@ locals {
     "tf-name"        = local.internet_gateway_name
     "tf-main"        = "vcn"
     "tf-type"        = "internet-gateway"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 
   nat_gateway_name = var.nat_gateway_name != null ? var.nat_gateway_name : "${var.display_name}-ngtw"
@@ -32,7 +28,7 @@ locals {
     "tf-name"        = local.nat_gateway_name
     "tf-main"        = "vcn"
     "tf-type"        = "nat-gateway"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 
   service_gateway_name = var.service_gateway_name != null ? var.service_gateway_name : "${var.display_name}-sgtw"
@@ -41,7 +37,7 @@ locals {
     "tf-name"        = local.service_gateway_name
     "tf-main"        = "vcn"
     "tf-type"        = "service-gateway"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 
   route_table_public_name = var.public_route_table_name != null ? var.public_route_table_name : "${var.display_name}-public-rt"
@@ -51,7 +47,7 @@ locals {
     "tf-main"        = "vcn"
     "tf-type"        = "route-table"
     "tf-type-env"    = "public"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 
   route_table_private_name = var.private_route_table_name != null ? var.private_route_table_name : "${var.display_name}-private-rt"
@@ -61,7 +57,7 @@ locals {
     "tf-main"        = "vcn"
     "tf-type"        = "route-table"
     "tf-type-env"    = "private"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   }
 }
 
@@ -204,7 +200,7 @@ resource "oci_core_subnet" "create_public_subnets" {
     "tf-name"        = each.value.name
     "tf-main"        = "vcn"
     "tf-type"        = "public-subnet"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   } : {})
 }
 
@@ -230,6 +226,6 @@ resource "oci_core_subnet" "create_private_subnets" {
     "tf-name"        = each.value.name
     "tf-main"        = "vcn"
     "tf-type"        = "private-subnet"
-    "tf-compartment" = "${data.oci_identity_compartments.compartment.name}"
+    "tf-compartment" = var.compartment_name
   } : {})
 }
