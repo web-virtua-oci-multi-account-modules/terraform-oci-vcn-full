@@ -270,7 +270,7 @@ variable "public_subnets" {
     ipv6cidr_block             = optional(string)
     ipv6cidr_blocks            = optional(list(string))
     prohibit_internet_ingress  = optional(bool)
-    prohibit_public_ip_on_vnic = optional(string)
+    prohibit_public_ip_on_vnic = optional(bool)
   }))
   default = []
 }
@@ -289,7 +289,7 @@ variable "private_subnets" {
     ipv6cidr_block             = optional(string)
     ipv6cidr_blocks            = optional(list(string))
     prohibit_internet_ingress  = optional(bool)
-    prohibit_public_ip_on_vnic = optional(string)
+    prohibit_public_ip_on_vnic = optional(bool)
   }))
   default = []
 }
